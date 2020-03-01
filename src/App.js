@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
-import { Descriptions } from 'antd';
 import 'antd/dist/antd.css';
+import Devis from './Devis';
 
 
  function App() {
@@ -9,7 +9,7 @@ import 'antd/dist/antd.css';
 
   return (
     <div className="App">
-       
+       <Devis/>
     
     </div>
   );

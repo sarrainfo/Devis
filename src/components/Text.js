@@ -7,8 +7,8 @@ import PropTypes from 'prop-types';
 
 // ============================================================
 // Components
-const Text = ({children, strong})=>{
-    return (<Typography.Text strong={strong}>{children}</Typography.Text>)
+const Text = ({children, strong, underline, type })=>{
+    return (<Typography.Text strong={strong}  underline={underline} type={type}>{children}</Typography.Text>)
 };
 
 
