@@ -12,7 +12,6 @@ const {Text, Title} = Typography;
 
 // Component
 const Header = ({company,devisTitle,chantier, customer,date, billingAddress})=>{
-    console.log('ss', company);
     const representantLegal = 
             `Representant legal:${company.firstNameRepresentantLegal} ${company.lastNameRepresentantLegal}`;
     const toClient = `A ${customer.name}`;

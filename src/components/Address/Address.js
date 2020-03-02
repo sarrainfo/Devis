@@ -2,6 +2,7 @@
 // Import packages
 import React from 'react';
 import { Row, Col} from 'antd';
+import PropTypes from 'prop-types';
 import 'antd/dist/antd.css';
 
 // ============================================================
@@ -24,5 +25,12 @@ const Address = ({street, postalCode, city})=>{
     
     )
 }
+
+Address.propTypes = {
+    street : PropTypes.string.isRequired,
+    postalCode : PropTypes.string.isRequired,
+    city : PropTypes.string.isRequired,
+    
+};
 
 export default Address;

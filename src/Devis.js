@@ -1,7 +1,7 @@
 // ============================================================
 // Import packages
 import React from 'react';
-import { Row, Col, Typography } from 'antd';
+import { Row, Col } from 'antd';
 
 
 import {Header, Lot, PaymentItems, TotalAmount} from './scene';
@@ -10,7 +10,6 @@ import {
     URL_DEVIS, FILTER_ITEMS, MENU, BY_PIECE, BY_WORKS, OTHER_SERVICE,
     PAYMENT_CONDITION_TITLE,
     selectDataLocations, selectDataLots, getWorkByPiece,
-   // getPaymentConditionText
     } from './utils';
 
 //===========================================================
@@ -168,8 +167,3 @@ class Devis extends React.Component{
 //=========================
 // export
 export default Devis;
-
-{/* <PaymentCondition  style={{textAlign: 'left'}} />
-<PaymentCondition>
-    //{this.getPaymentCondition()}
-</PaymentCondition> */}

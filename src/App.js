@@ -10,7 +10,6 @@ import Devis from './Devis';
   return (
     <div className="App">
        <Devis/>
-    
     </div>
   );
 }
