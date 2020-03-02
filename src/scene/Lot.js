@@ -10,7 +10,7 @@ const {Text, Title} = Typography;
 
 //===========================================================================
 // component
-const Lot =({lignes,label,totalPriceInT,totalPriceExT })=>{
+const Lot =({lignes,label,totalPriceInT,totalPriceExT, unite })=>{
   
   //
   const columns = [
@@ -53,9 +53,9 @@ const Lot =({lignes,label,totalPriceInT,totalPriceExT })=>{
               designation:designation,
               unite: ligne.unite, 
               quantite:ligne.quantite, 
-              unit_price:ligne.unit_price,
-              priceExT: ligne.priceExT,
-              priceInT:ligne.priceInT, 
+              unit_price:`${ligne.unit_price} ${unite}`,
+              priceExT: `${ligne.priceExT} ${unite}`,
+              priceInT:`${ligne.priceInT} ${unite}`, 
             })
     });
 
@@ -63,8 +63,8 @@ const Lot =({lignes,label,totalPriceInT,totalPriceExT })=>{
     data.push({
            key:lignes.length+1,
            designation: <Text type="danger">{TOTAL}</Text>,
-           priceExT : <Text type="danger">{totalPriceExT}</Text>,
-           priceInT:<Text type="danger">{totalPriceInT}</Text>,
+           priceExT : <Text type="danger">{totalPriceExT}{unite}</Text>,
+           priceInT:<Text type="danger">{totalPriceInT}{unite}</Text>,
       })
 
 

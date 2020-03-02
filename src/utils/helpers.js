@@ -1,6 +1,5 @@
 //====================================================================================
-// Import module
-import React from 'react'
+// Import 
 
 import {OTHER_SERVICE} from './constants';
 

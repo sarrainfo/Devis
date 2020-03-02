@@ -1,18 +1,18 @@
 // ============================================================
 // Import packages
 import React from 'react';
-import { Row, Col, Typography, Card } from 'antd';
+import { Row, Col, Typography } from 'antd';
 
 
-import {Header, Lot, PaymentCondition} from './scene';
+import {Header, Lot, PaymentItems, TotalAmount} from './scene';
 import {Button} from './components';
 import {
     URL_DEVIS, FILTER_ITEMS, MENU, BY_PIECE, BY_WORKS, OTHER_SERVICE,
+    PAYMENT_CONDITION_TITLE,
     selectDataLocations, selectDataLots, getWorkByPiece,
    // getPaymentConditionText
     } from './utils';
 
-const {Text} = Typography
 //===========================================================
 // Component
 class Devis extends React.Component{
@@ -25,7 +25,6 @@ class Devis extends React.Component{
         this.updateDataToState = this.updateDataToState.bind(this);
         this.handleClick = this.handleClick.bind(this);
         this.updateTable = this.updateTable.bind(this);
-        this.getPaymentCondition = this.getPaymentCondition.bind(this);
     }
     handleClick(name){
         this.setState({filter:name});
@@ -36,11 +35,24 @@ class Devis extends React.Component{
         
         if(this.state.filter===BY_WORKS){
             return this.state.lotsByWorks.map(({lignes,label,totalPriceInT, totalPriceExT})=>(
-                <Lot key={label} lignes={lignes} label={label} totalPriceInT={totalPriceInT} totalPriceExT={totalPriceExT}/>)) 
+                <Lot 
+                key={label} 
+                lignes={lignes} 
+                label={label} 
+                totalPriceInT={totalPriceInT} 
+                totalPriceExT={totalPriceExT}
+                unite='€'
+                />)) 
         }
         if( this.state.filter=== BY_PIECE){
             return this.state.lotsByPiece.map(({lignes, totalPriceInT, label, totalPriceExT})=>(
-                <Lot key={label} lignes={lignes} label={label} totalPriceInT={totalPriceInT} totalPriceExT={totalPriceExT} />
+                <Lot key={label}
+                 lignes={lignes} 
+                 label={label} 
+                 totalPriceInT={totalPriceInT}
+                 totalPriceExT={totalPriceExT}
+                 unite= '€'
+                  />
             ))
         }
        
@@ -89,7 +101,7 @@ class Devis extends React.Component{
         const  lotsByPiece = getWorkByPiece(locations, lotsByWorks);
 
         // data about payment condition
-        const payment = data.modalitesPaiement;
+        const payments = data.modalitesPaiement;
         const {prixTotalTTC:totalPriceInT, prixTotalHT:totalPriceExT} = data;
         
         // Initialize the state
@@ -104,25 +116,14 @@ class Devis extends React.Component{
             date: data.date,
             lotsByWorks,
             lotsByPiece,
-            payment,
+            payments,
             totalPriceInT,
             totalPriceExT,
             
         })
     
     }
-    getPaymentCondition(){
-        return this.state.payment.map(({label, montant, pourcentage})=>{
-            const condition = `${label} de ${pourcentage}%:`;
-            return (
-            <div style={{textAlign: 'left'}} key={montant}>
-                {condition}
-                <Text strong>{montant}</Text>
-                <br/>
-            </div>
-            )
-        });
-    }
+    
     async componentDidMount(){
         
         this.setState({isLoading: true});
@@ -135,32 +136,27 @@ class Devis extends React.Component{
         if( this.state.isLoading){
             return <div>onLoading ...</div>
         }
+        const {company, devisTitle, chantier, customer,date, billingAddress,totalPriceExT, totalPriceInT, payments}= this.state;
 
         return (
             <>
                 <Header 
-                    company={this.state.company}
-                    devisTitle={this.state.devisTitle} 
-                    chantier={this.state.chantier}
-                    customer={this.state.customer}
-                    date={this.state.date}
-                    billingAddress={this.state.billingAddress}/>
+                    company={company}
+                    devisTitle={devisTitle} 
+                    chantier={chantier}
+                    customer={customer}
+                    date={date}
+                    billingAddress={billingAddress}/>
                     <Button menuItems={FILTER_ITEMS} label={MENU} handleClick={this.handleClick}/>
                 {this.updateTable()}
                 <Row>
                     <Col span={12} offset={3}>
-                        <PaymentCondition>
-                            {this.getPaymentCondition()}
-                        </PaymentCondition>
-                        </Col>
-                        <Col offset={15}>
-                        <Card style={{ width: 600 }}>
-                            <p><Text strong>{`TOTAL HT: ${this.state.totalPriceExT}`}</Text></p>
-                            <p><Text strong>{`TOTAL TTC: ${this.state.totalPriceInT}`}</Text></p>
-                        </Card>
+                    <div style={{color:'blue', textDecoration:'underline'}}>{PAYMENT_CONDITION_TITLE}</div>
+                        <PaymentItems items={payments} unite='€'/>
                     </Col>
-                            
-        
+                    <Col offset={15}>
+                        <TotalAmount totalPriceExT={totalPriceExT} totalPriceInT= {totalPriceInT} unite='€'/>
+                    </Col>
                 </Row>
                
             </>
@@ -172,3 +168,8 @@ class Devis extends React.Component{
 //=========================
 // export
 export default Devis;
+
+{/* <PaymentCondition  style={{textAlign: 'left'}} />
+<PaymentCondition>
+    //{this.getPaymentCondition()}
+</PaymentCondition> */}
