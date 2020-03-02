@@ -223,14 +223,26 @@ function getLabelLocation(locations,uuid){
     return location ? location.label : OTHER_SERVICE;
 }
 
-/**
+/**{description, designation, priceExT, priceInT, quantite, unit_price,unite}
  * Get work by piece from lots 
  * @param {Array} lots 
  * @param {string} piece uuid 
  */
 function getWorksByPieceFromLots(lots, uuid){
     const allLignes = getAllLignes(lots);
-    const {lignesByPiece} = getWorksByPieceFromLignes(allLignes, uuid);
+    let {lignesByPiece} = getWorksByPieceFromLignes(allLignes, uuid);
+    // retrive no need information: locations
+    lignesByPiece = lignesByPiece.map(({description, designation, priceExT, priceInT, quantite, unit_price,unite})=>(
+         {
+            description,
+            designation,
+            priceExT,
+            priceInT,
+            quantite,
+            unit_price,
+            unite
+        })
+    );
     const {totalPriceInT, totalPriceExT} = getTotalPriceOnLignes(lignesByPiece);
     return {
             uuid,
