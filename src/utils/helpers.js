@@ -67,29 +67,6 @@ function selectDataLocations(data){
     }))
 }
 
-/** Depreciate
- * Get locations by piece
- * @param {Array} locations 
- * @param {Array} lots 
- */
-function getByPiece(locations,lots){
-    console.log(lots, locations)
-    return lots.reduce((acc, curr)=>{
-       curr.lignes.map(ligne=>{
-           ligne.locations.forEach(uuid=>{
-                acc.forEach(value=> {
-                    value.uuid===uuid && value.lignes.push(ligne);
-                    });
-                });
-             acc.totalPriceTTC= acc.totalPriceTTC+ ligne.priceTTC;
-             console.log('acc',isNaN(acc.totalPriceTTC));
-                
-            });
-            return acc
-        },locations)
-         
-}
-
 /**
  * Get label from location uuid
  * @param {Array} locations 
@@ -181,16 +158,10 @@ function getWorksByPieceFromLignes(lignes, uuid){
     }
 }
 
-// function getPaymentConditionText(dataPayment){
-//     return dataPayment.map(({label, montant, pourcentage})=>(
-//         `${label} de ${pourcentage}: ${<Text strong>{montant}</Text>}`
-//     ))
-// }
 //==================================================================
 // export 
 export {
     getWorkByPiece,
-    //getPaymentConditionText,
     selectDataLots,
     selectDataLignes,
     selectDataLocations,
