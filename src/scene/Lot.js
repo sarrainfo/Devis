@@ -70,7 +70,7 @@ const Lot =({lignes,label,totalPriceInT,totalPriceExT })=>{
 
     return (
       <div style={{padding:'70px'}}>
-        <Title level={4} title={label}/>
+        <Title level={4}>{label}</Title>
         <Table columns={columns} dataSource={data} size="medium" bordered pagination={false}
           />
       </div>

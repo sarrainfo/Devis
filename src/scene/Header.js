@@ -12,6 +12,7 @@ const {Text, Title} = Typography;
 
 // Component
 const Header = ({company,devisTitle,chantier, customer,date, billingAddress})=>{
+    console.log('ss', company);
     const representantLegal = 
             `Representant legal:${company.firstNameRepresentantLegal} ${company.lastNameRepresentantLegal}`;
     const toClient = `A ${customer.name}`;
@@ -30,7 +31,7 @@ const Header = ({company,devisTitle,chantier, customer,date, billingAddress})=>{
     </Row>
     <Row>
     <Col span={2} offset={3}>
-        <Title level={2} title={company.name}/>
+        <Title level={2}>{company.name}</Title>
     </Col>
     </Row>
     <Row>
@@ -57,15 +58,12 @@ const Header = ({company,devisTitle,chantier, customer,date, billingAddress})=>{
     </Row>
     <Row>
         <Col span={24}>
-        <Title title={devisTitle} level={3}/>
+        <Title level={3}>{devisTitle}</Title>
         </Col>
     </Row>
 </>)
 }
 
-function getFrenchDate(date){
-    const newDate = date.split('-').reverse();
-}
 
 // ============================================================
 // export

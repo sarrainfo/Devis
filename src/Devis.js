@@ -1,7 +1,7 @@
 // ============================================================
 // Import packages
 import React from 'react';
-import { Row, Col, Typography } from 'antd';
+import { Row, Col, Typography, Card } from 'antd';
 
 
 import {Header, Lot, PaymentCondition} from './scene';
@@ -73,6 +73,7 @@ class Devis extends React.Component{
           firstNameRepresentantLegal: data.company.firstNameRepresentantLegal,
           lastNameRepresentantLegal: data.company.lastNameRepresentantLegal,
           logoUrl : data.company.logoUrl,
+          name: data.company.name,
         };
 
         //billing information
@@ -89,6 +90,7 @@ class Devis extends React.Component{
 
         // data about payment condition
         const payment = data.modalitesPaiement;
+        const {prixTotalTTC:totalPriceInT, prixTotalHT:totalPriceExT} = data;
         
         // Initialize the state
         this.setState({ 
@@ -103,6 +105,8 @@ class Devis extends React.Component{
             lotsByWorks,
             lotsByPiece,
             payment,
+            totalPriceInT,
+            totalPriceExT,
             
         })
     
@@ -144,13 +148,19 @@ class Devis extends React.Component{
                     <Button menuItems={FILTER_ITEMS} label={MENU} handleClick={this.handleClick}/>
                 {this.updateTable()}
                 <Row>
-                    <Col span={5} offset={3}>
+                    <Col span={12} offset={3}>
                         <PaymentCondition>
                             {this.getPaymentCondition()}
                         </PaymentCondition>
+                        </Col>
+                        <Col offset={15}>
+                        <Card style={{ width: 600 }}>
+                            <p><Text strong>{`TOTAL HT: ${this.state.totalPriceExT}`}</Text></p>
+                            <p><Text strong>{`TOTAL TTC: ${this.state.totalPriceInT}`}</Text></p>
+                        </Card>
+                    </Col>
                             
         
-                    </Col>
                 </Row>
                
             </>
