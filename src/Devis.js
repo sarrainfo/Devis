@@ -1,15 +1,18 @@
 // ============================================================
 // Import packages
 import React from 'react';
+import { Row, Col, Typography } from 'antd';
 
 
-import {Header, Lot} from './scene';
+import {Header, Lot, PaymentCondition} from './scene';
 import {Button} from './components';
 import {
     URL_DEVIS, FILTER_ITEMS, MENU, BY_PIECE, BY_WORKS, OTHER_SERVICE,
-    selectDataLocations, selectDataLots, getWorkByPiece
+    selectDataLocations, selectDataLots, getWorkByPiece,
+   // getPaymentConditionText
     } from './utils';
 
+const {Text} = Typography
 //===========================================================
 // Component
 class Devis extends React.Component{
@@ -22,6 +25,7 @@ class Devis extends React.Component{
         this.updateDataToState = this.updateDataToState.bind(this);
         this.handleClick = this.handleClick.bind(this);
         this.updateTable = this.updateTable.bind(this);
+        this.getPaymentCondition = this.getPaymentCondition.bind(this);
     }
     handleClick(name){
         this.setState({filter:name});
@@ -46,17 +50,22 @@ class Devis extends React.Component{
     updateDataToState(data){
 
         // Get need information data from json request
+        // customer information
         const {customerName, customerEmail}= data.deal;
         const customer = {
             name:customerName,
             email: customerEmail,
         };
+
+        //
         let {address, postalCode, city}= data.deal.chantierAddress;
         const chantier={
             address,
             postalCode,
             city
         };
+
+        // company information
         const company ={
           address: data.company.address,
           postalCode: data.company.postalCode,
@@ -65,6 +74,8 @@ class Devis extends React.Component{
           lastNameRepresentantLegal: data.company.lastNameRepresentantLegal,
           logoUrl : data.company.logoUrl,
         };
+
+        //billing information
         const billingAddress={
             address: data.deal.billingAddress.address,
             postalCode: data.deal.billingAddress.postalCode,
@@ -75,6 +86,9 @@ class Devis extends React.Component{
         locations.push({label:OTHER_SERVICE, uuid:null});
         const lotsByWorks = selectDataLots(data);
         const  lotsByPiece = getWorkByPiece(locations, lotsByWorks);
+
+        // data about payment condition
+        const payment = data.modalitesPaiement;
         
         // Initialize the state
         this.setState({ 
@@ -88,9 +102,22 @@ class Devis extends React.Component{
             date: data.date,
             lotsByWorks,
             lotsByPiece,
+            payment,
             
         })
     
+    }
+    getPaymentCondition(){
+        return this.state.payment.map(({label, montant, pourcentage})=>{
+            const condition = `${label} de ${pourcentage}%:`;
+            return (
+            <div style={{textAlign: 'left'}} key={montant}>
+                {condition}
+                <Text strong>{montant}</Text>
+                <br/>
+            </div>
+            )
+        });
     }
     async componentDidMount(){
         
@@ -104,15 +131,7 @@ class Devis extends React.Component{
         if( this.state.isLoading){
             return <div>onLoading ...</div>
         }
-       
-        // Change table if change the filter
-        // const lots = this.state.filter===BY_WORKS ?
-        //     this.state.lotsByWorks.map(({lignes,label,totalPriceTTC})=>(
-        //         <Lot key={label} lignes={lignes} label={label} totalPriceTTC={totalPriceTTC}/>)) :
-        //     this.state.lotsByPiece.map(({lignes,label, totalPriceTTC})=>(
-        //         <Lot key={label} lignes={lignes} label={label} totalPriceTTC={totalPriceTTC} />))
-        //     ;
-        
+
         return (
             <>
                 <Header 
@@ -124,10 +143,21 @@ class Devis extends React.Component{
                     billingAddress={this.state.billingAddress}/>
                     <Button menuItems={FILTER_ITEMS} label={MENU} handleClick={this.handleClick}/>
                 {this.updateTable()}
+                <Row>
+                    <Col span={5} offset={3}>
+                        <PaymentCondition>
+                            {this.getPaymentCondition()}
+                        </PaymentCondition>
+                            
+        
+                    </Col>
+                </Row>
+               
             </>
             )
         }
 }
+
 
 //=========================
 // export

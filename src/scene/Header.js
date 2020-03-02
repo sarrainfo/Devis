@@ -1,13 +1,14 @@
 // ============================================================
 // Import packages
 import React from 'react';
-import { Row, Col } from 'antd';
+import { Row, Col, Typography } from 'antd';
 import 'antd/dist/antd.css';
 
 // ============================================================
 // Import components
-import {Address,Logo, Text, Title} from '../components';
+import {Address,Logo} from '../components';
 
+const {Text, Title} = Typography;
 
 // Component
 const Header = ({company,devisTitle,chantier, customer,date, billingAddress})=>{

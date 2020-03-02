@@ -1,5 +1,6 @@
 //====================================================================================
 // Import module
+import React from 'react'
 
 import {OTHER_SERVICE} from './constants';
 
@@ -180,10 +181,17 @@ function getWorksByPieceFromLignes(lignes, uuid){
         lignesByPiece
     }
 }
+
+// function getPaymentConditionText(dataPayment){
+//     return dataPayment.map(({label, montant, pourcentage})=>(
+//         `${label} de ${pourcentage}: ${<Text strong>{montant}</Text>}`
+//     ))
+// }
 //==================================================================
 // export 
 export {
     getWorkByPiece,
+    //getPaymentConditionText,
     selectDataLots,
     selectDataLignes,
     selectDataLocations,

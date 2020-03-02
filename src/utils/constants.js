@@ -19,7 +19,10 @@ const FILTER_ITEMS=[BY_PIECE,BY_WORKS];
 const MENU ='Trier';
 
 // autre prestation
-const OTHER_SERVICE='Autre prestations'
+const OTHER_SERVICE='Autre prestations';
+
+// Payment condition
+const PAYMENT_CONDITION_TITLE = 'Condition de reglementation';
 
 //==============================================
 // export
@@ -30,6 +33,7 @@ export {
     FILTER_ITEMS,
     MENU,
     OTHER_SERVICE,
+    PAYMENT_CONDITION_TITLE,
     PRIECE_INT,
     PRIECE_EXT,
     QUANTITE,

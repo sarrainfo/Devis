@@ -1,11 +1,15 @@
 // ============================================================
 // Import packages
 import React from 'react';
-import { Table } from 'antd';
+import { Table, Typography } from 'antd';
 //import 'antd/dist/antd.css';
 
 import { PRIECE_INT, PRIECE_EXT,DESIGNATION,QUANTITE, UNITE, UNITE_PRICE, TOTAL} from '../utils/constants';
-import {Title, Text} from '../components';
+
+const {Text, Title} = Typography;
+
+//===========================================================================
+// component
 const Lot =({lignes,label,totalPriceInT,totalPriceExT })=>{
   
   //
