@@ -13,9 +13,8 @@ import {Address,Logo, Text, Title} from '../components';
 const Header = ({company,devisTitle,chantier, customer,date, billingAddress})=>{
     const representantLegal = 
             `Representant legal:${company.firstNameRepresentantLegal} ${company.lastNameRepresentantLegal}`;
-            const toClient = `A ${customer.name}`;
-            console.log('date', date);
-        const displayDate = `le ${date}`;
+    const toClient = `A ${customer.name}`;
+    const displayDate = `le ${date}`;
     return (<>
     <Row>
         <Col span={2} offset={3}>
@@ -65,7 +64,6 @@ const Header = ({company,devisTitle,chantier, customer,date, billingAddress})=>{
 
 function getFrenchDate(date){
     const newDate = date.split('-').reverse();
-    console.log(newDate);
 }
 
 // ============================================================

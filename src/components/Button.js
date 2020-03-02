@@ -1,21 +1,21 @@
 import React from 'react';
 
-import { Typography, Menu, Dropdown } from 'antd';
+import {  Menu, Dropdown } from 'antd';
+import {Button as AntButton} from 'antd';
 import { DownOutlined } from '@ant-design/icons';
-
-const Button=({onClick, menuItems, name})=>{
+const Button=({handleClick, menuItems, label})=>{
     const menu = (
-        <Menu onClick={onClick}>
-            {menuItems.map((item,index)=>(
-                <Menu.Item key={index}>{item.name}</Menu.Item>
+        <Menu >
+            {menuItems.map((name,index)=>(
+                <Menu.Item key={index} onClick={()=>{handleClick(name)}}>{name}</Menu.Item>
                 ))
             }
         </Menu>
     );
     return (<Dropdown overlay={menu}>
-      <Typography.Button>
-        {name} <DownOutlined />
-      </Typography.Button>
+      <AntButton>
+        {label} <DownOutlined />
+      </AntButton>
     </Dropdown>)
 }
 

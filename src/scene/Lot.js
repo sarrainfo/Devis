@@ -4,57 +4,64 @@ import React from 'react';
 import { Table } from 'antd';
 //import 'antd/dist/antd.css';
 
-import { TTC_AMOUNT, DESIGNATION,QUANTITE, UNITE, UNITE_PRICE, TOTAL} from '../utils/constants';
+import { PRIECE_INT, PRIECE_EXT,DESIGNATION,QUANTITE, UNITE, UNITE_PRICE, TOTAL} from '../utils/constants';
 import {Title, Text} from '../components';
-const Lot =({lignes,label,totalPriceTTC })=>{
+const Lot =({lignes,label,totalPriceInT,totalPriceExT })=>{
+  
+  //
+  const columns = [
+    {
+      title: DESIGNATION,
+      dataIndex: 'designation',
+    },
+    {
+      title: UNITE,
+      dataIndex: 'unite',
+    },
+    {
+      title: QUANTITE,
+      dataIndex: 'quantite',
+    },
+    {
+      title: UNITE_PRICE,
+      dataIndex: 'unit_price',
+    },
+    {
+      title: PRIECE_EXT,
+      dataIndex: 'priceExT',
+    },
+    {
+      title: PRIECE_INT,
+      dataIndex: 'priceInT',
+    }];
 
-    //
-    const columns = [
-        {
-            title: DESIGNATION,
-            dataIndex: 'designation',
-        },
-        {
-            title: UNITE,
-            dataIndex: 'unite',
-        },
-        {
-            title: QUANTITE,
-            dataIndex: 'quantite',
-        },
-        {
-            title: UNITE_PRICE,
-            dataIndex: 'unit_price',
-        },
-        {
-          title: TTC_AMOUNT,
-          dataIndex: 'amount',
-        }
-      ];
-
-        // Data table
-      const data = lignes.map((ligne,i) => {
+    // Data table
+    const data = lignes.map((ligne,i) => {
       
-        const designation = 
-        <div>
-          <Text underline>{ligne.designation}</Text>
-          <br/>{ligne.description}
-        </div>;
-          return({
-            key:i+1,
-            designation:designation,
-            unite: ligne.unite, 
-            quantite:ligne.quantite, 
-            unit_price:ligne.unit_price,
-            amount:ligne.priceTTC, 
-          })});
+      const designation = 
+          <div>
+            <Text underline>{ligne.designation}</Text>
+            <br/>{ligne.description}
+          </div>;
 
-          // Add total TTC
-         data.push({
+        return({
+              key:i+1,
+              designation:designation,
+              unite: ligne.unite, 
+              quantite:ligne.quantite, 
+              unit_price:ligne.unit_price,
+              priceExT: ligne.priceExT,
+              priceInT:ligne.priceInT, 
+            })
+    });
+
+    // Add total Taxe Include
+    data.push({
            key:lignes.length+1,
            designation: <Text type="danger">{TOTAL}</Text>,
-           amount:<Text type="danger">{totalPriceTTC}</Text>,
-         })
+           priceExT : <Text type="danger">{totalPriceExT}</Text>,
+           priceInT:<Text type="danger">{totalPriceInT}</Text>,
+      })
 
 
     return (
